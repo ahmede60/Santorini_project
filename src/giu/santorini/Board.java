@@ -7,6 +7,14 @@ import giu.santorini.tiles.Piece;
 import giu.santorini.utilities.Location;
 
 public class Board implements BoardInterface {
+	Player Player1;
+	Player Player2;
+	public Board(Player Player1,Player Player2){
+		this.Player1 = Player1;
+		this.Player2 = Player2;
+	}
+	public Board(){
+	}
 	int SIDE = 5;
 	public void move(Piece Piece, Location newLocation) throws InvalidMoveException{
 	}
