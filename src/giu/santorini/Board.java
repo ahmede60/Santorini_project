@@ -9,16 +9,27 @@ import giu.santorini.utilities.Location;
 public class Board implements BoardInterface {
 	Player Player1;
 	Player Player2;
+	int[][] Cells;
 	public Board(Player Player1,Player Player2){
 		this.Player1 = Player1;
 		this.Player2 = Player2;
+		this.Cells = new int[SIDE][SIDE];
+		for(int i=0;i<SIDE;i++){
+			for(int j=0;j<SIDE;j++){
+				Cells[i][j]=0;
+			}
+		}
 	}
 	public Board(){
 	}
 	int SIDE = 5;
 	public void move(Piece Piece, Location newLocation) throws InvalidMoveException{
+		Piece.Location = newLocation;
+		// didnt deal with the exception yet//
 	}
 	public void place(Piece Piece, Location newLocation) throws InvalidPlacementException{
+		Cells[newLocation.x][newLocation.y]++;
+		// didnt deal with the exception yet//
 	}
 	public boolean isGameOver(){
 		return false;

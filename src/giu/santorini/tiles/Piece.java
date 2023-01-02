@@ -5,7 +5,7 @@ import giu.santorini.utilities.Location;
 import java.util.ArrayList;
 
 public class Piece implements PieceInterface{
-	Location Location;
+	public Location Location;
 	public Piece(Location Location){
 		this.Location = Location;
 	}
