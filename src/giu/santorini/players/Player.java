@@ -1,8 +1,8 @@
 package giu.santorini.players;
 
 public class Player {
-	String name;
-	int type;
+	public String name;
+	public int type;
 	public Player(String name, int type){
 		this.name = name;
 		this.type = type;

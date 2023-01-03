@@ -1,7 +1,6 @@
 package giu.santorini.tiles;
 
 import giu.santorini.utilities.Location;
-
 import java.util.ArrayList;
 
 public class Piece implements PieceInterface{
