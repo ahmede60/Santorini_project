@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 public class Piece implements PieceInterface{
 	public Location Location;
+	public boolean moved;
 	public Piece(Location Location){
 		this.Location = Location;
+		this.moved = false;
 	}
 public Piece(){
 	}

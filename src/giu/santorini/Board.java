@@ -35,12 +35,12 @@ public class Board implements BoardInterface {
 			Piece1b = new Pyramid(new Location(4,1));
 		}
 		if (Player2.type == 1){
-			Piece2a = new Cube(new Location(0,0));
-			Piece2b = new Cube(new Location(4,1));
+			Piece2a = new Cube(new Location(0,3));
+			Piece2b = new Cube(new Location(4,4));
 		}
 		else{
-			Piece2a = new Pyramid(new Location(0,0));
-			Piece2b = new Pyramid(new Location(4,1));
+			Piece2a = new Pyramid(new Location(0,3));
+			Piece2b = new Pyramid(new Location(4,4));
 		}
 		turn = 0;
 	}
@@ -49,83 +49,83 @@ public class Board implements BoardInterface {
 	int SIDE = 5;
 	public void move(Piece Piece, Location newLocation) throws InvalidMoveException{
 		Piece.Location = newLocation;
+		Piece.moved = true;
 		// didnt deal with the exception yet// check turn use canmove method
 	}
 	public void place(Piece Piece, Location newLocation) throws InvalidPlacementException{
-		Level[newLocation.x][newLocation.y]++;
+		Level[newLocation.y][newLocation.x]++;
 		turn++;
+		Piece.moved = false;
 		// didnt deal with the exception yet//
 	}
 	public boolean isGameOver(){
-		return	hasNoMoves(Player1) |
-				hasNoMoves(Player2) |
-				Level[Piece1a.Location.y][Piece1a.Location.x]==3 |
-				Level[Piece1b.Location.y][Piece1b.Location.x]==3 |
-				Level[Piece2a.Location.y][Piece2a.Location.x]==3 |
-				Level[Piece2b.Location.y][Piece2b.Location.x]==3 ;
+		return	hasNoMoves(this.Player1) |
+				hasNoMoves(this.Player2) |
+				this.Level[this.Piece1a.Location.y][this.Piece1a.Location.x]==3 |
+				this.Level[this.Piece1b.Location.y][this.Piece1b.Location.x]==3 |
+				this.Level[this.Piece2a.Location.y][this.Piece2a.Location.x]==3 |
+				this.Level[this.Piece2b.Location.y][this.Piece2b.Location.x]==3 ;
 	}
 	public boolean isWinner(Player player){
-		if (player.name.equals(Player1.name)){
+		if (player.name.equals(this.Player1.name)){
 			if (hasNoMoves(Player2) |
-				Level[Piece1a.Location.y][Piece1a.Location.x]==3 |
-				Level[Piece1b.Location.y][Piece1b.Location.x]==3)
+				this.Level[Piece1a.Location.y][Piece1a.Location.x]==3 |
+				this.Level[Piece1b.Location.y][Piece1b.Location.x]==3)
 				return true;
 		}
 		if (player.name.equals(Player2.name)){
-			if (hasNoMoves(Player1) |
-				Level[Piece2a.Location.y][Piece2a.Location.x]==3 |
-				Level[Piece2b.Location.y][Piece2b.Location.x]==3)
+			if (hasNoMoves(this.Player1) |
+				this.Level[Piece2a.Location.y][Piece2a.Location.x]==3 |
+				this.Level[Piece2b.Location.y][Piece2b.Location.x]==3)
 				return true;
 		}
 		return false;
 	}
 	public boolean hasNoMoves(Player player){
-		if (player.name.equals(Player1.name)){
-			if (Piece1a.possibleMoves().isEmpty() & Piece1b.possibleMoves().isEmpty())
-				return true;
-			int possiblemoves = 0;
-			for (int i = 0; i < Piece1a.possibleMoves().size();i++){
-				if (Level[Piece1a.possibleMoves().get(i).y][Piece1a.possibleMoves().get(i).x]+1 <= Level[Piece1a.Location.y][Piece1a.Location.x])
-					possiblemoves+=1;
+		if (player.name.equals(this.Player1.name)){
+			int allowedmoves = 0;
+			for (int i = 0; i < this.Piece1a.possibleMoves().size();i++){
+				if (canMove(this.Piece1a, this.Piece1a.possibleMoves().get(i)))
+					allowedmoves+=1;
 			}
-			for (int i = 0; i < Piece1b.possibleMoves().size();i++){
-				if (Level[Piece1b.possibleMoves().get(i).y][Piece1b.possibleMoves().get(i).x]+1 <= Level[Piece1b.Location.y][Piece1b.Location.x])
-					possiblemoves+=1;
+			for (int i = 0; i < this.Piece1b.possibleMoves().size();i++){
+				if (canMove(this.Piece1b, this.Piece1b.possibleMoves().get(i)))
+					allowedmoves+=1;
 			}
-			if (possiblemoves>0)
+			if (allowedmoves>0)
 				return false;
 		}
-		if (player.name.equals(Player2.name)){
-			if (Piece2a.possibleMoves().isEmpty() & Piece2b.possibleMoves().isEmpty())
-				return true;
-			int possiblemoves = 0;
-			for (int i = 0; i < Piece2a.possibleMoves().size();i++){
-				if (Level[Piece2a.possibleMoves().get(i).y][Piece2a.possibleMoves().get(i).x]+1 <= Level[Piece2a.Location.y][Piece2a.Location.x])
-					possiblemoves+=1;
+		if (player.name.equals(this.Player2.name)){
+			int allowedmoves = 0;
+			for (int i = 0; i < this.Piece2a.possibleMoves().size();i++){
+				if (canMove(this.Piece2a, this.Piece2a.possibleMoves().get(i)))
+					allowedmoves+=1;
 			}
-			for (int i = 0; i < Piece2b.possibleMoves().size();i++){
-				if (Level[Piece2b.possibleMoves().get(i).y][Piece2b.possibleMoves().get(i).x]+1 <= Level[Piece2b.Location.y][Piece2b.Location.x])
-					possiblemoves+=1;
+			for (int i = 0; i < this.Piece2b.possibleMoves().size();i++){
+				if (canMove(this.Piece2b, this.Piece2b.possibleMoves().get(i)))
+					allowedmoves+=1;
 			}
-			if (possiblemoves>0)
+			if (allowedmoves>0)
 				return false;
 		}
-		return false;
+		return true;
 	}
 	public Player getWinner(){
-		if (isWinner(Player1))
-			return Player1;
-		if (isWinner(Player2))
-			return Player2;
+		if (isWinner(this.Player1))
+			return this.Player1;
+		if (isWinner(this.Player2))
+			return this.Player2;
 		return null;
 	}
 	public boolean canMove(Piece Piece, Location location){
-		if (Piece.possibleMoves().isEmpty())
-			return false;
 		for (int i = 0; i < Piece.possibleMoves().size();i++){
 			if ((Piece.possibleMoves().get(i).x == location.x)&
 			(Piece.possibleMoves().get(i).y == location.y)&
-			Level[Piece.possibleMoves().get(i).y][Piece.possibleMoves().get(i).x] <= (1+ Level[location.y][location.x]))
+			!((this.Piece1a.Location.y == location.y)&(this.Piece1a.Location.x == location.x))&
+			!((this.Piece1b.Location.y == location.y)&(this.Piece1b.Location.x == location.x))&
+			!((this.Piece2a.Location.y == location.y)&(this.Piece2a.Location.x == location.x))&
+			!((this.Piece2b.Location.y == location.y)&(this.Piece2b.Location.x == location.x))&
+			this.Level[Piece.Location.y][Piece.Location.x] <= (1+ this.Level[location.y][location.x]))
 				return true;
 		}
 		return false;
@@ -136,15 +136,19 @@ public class Board implements BoardInterface {
 		for (int i = 0; i < Piece.possiblePlacements().size();i++){
 			if ((Piece.possiblePlacements().get(i).x == location.x)&
 			(Piece.possiblePlacements().get(i).y == location.y)&
-			Level[Piece.possibleMoves().get(i).y][Piece.possibleMoves().get(i).x] <= 3)
+			!((this.Piece1a.Location.y == location.y)&(this.Piece1a.Location.x == location.x))&
+			!((this.Piece1b.Location.y == location.y)&(this.Piece1b.Location.x == location.x))&
+			!((this.Piece2a.Location.y == location.y)&(this.Piece2a.Location.x == location.x))&
+			!((this.Piece2b.Location.y == location.y)&(this.Piece2b.Location.x == location.x))&
+			this.Level[Piece.possibleMoves().get(i).y][Piece.possibleMoves().get(i).x] <= 3)
 				return true;
 		}
 		return false;
 	}
 	public Player getTurn(){
-		if (turn%2==0)
-			return Player1;
-		return Player2;
+		if (this.turn%2==0)
+			return this.Player1;
+		return this.Player2;
 	}
 	public String [][] display(){
 		return new String[0][0];
