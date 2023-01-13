@@ -48,9 +48,34 @@ public class Board implements BoardInterface {
 	}
 	int SIDE = 5;
 	public void move(Piece Piece, Location newLocation) throws InvalidMoveException{
-		Piece.Location = newLocation;
-		Piece.moved = true;
-		// didnt deal with the exception yet// check turn use canmove method
+		if(Piece.equals(this.Piece1a)){
+			this.Piece1a.Location = newLocation;
+			this.Piece1a.moved = true;
+		}
+		else{
+			throw new InvalidMoveException();
+		}
+		if(Piece.equals(this.Piece1b)){
+			this.Piece1b.Location = newLocation;
+			this.Piece1b.moved = true;
+		}
+		else{
+			throw new InvalidMoveException();
+		}
+		if(Piece.equals(this.Piece2a)){
+			this.Piece2a.Location = newLocation;
+			this.Piece2a.moved = true;
+		}
+		else{
+			throw new InvalidMoveException();
+		}
+		if(Piece.equals(this.Piece2b)){
+			this.Piece2b.Location = newLocation;
+			this.Piece2b.moved = true;
+		}
+		else{
+			throw new InvalidMoveException();
+		}
 	}
 	public void place(Piece Piece, Location newLocation) throws InvalidPlacementException{
 		if((this.canMove(Piece, newLocation))&Piece.moved){
