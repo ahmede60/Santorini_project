@@ -151,6 +151,41 @@ public class Board implements BoardInterface {
 		return this.Player2;
 	}
 	public String [][] display(){
-		return new String[0][0];
+		String[][] display = new String[this.SIDE][this.SIDE];
+		String m;
+		for(int i=0;i<this.SIDE;i++){
+			for(int j=0;j<this.SIDE;j++){
+				m = "";
+				m+= Level[i][j];
+				if((i == this.Piece1a.Location.y)&(j == this.Piece1a.Location.x)){
+					if(this.Player1.type == 1)
+						m+= "C";
+					if(this.Player1.type == 2)
+						m+= "P";
+					m+= "1";
+				}if((i == this.Piece1b.Location.y)&(j == this.Piece1b.Location.x)){
+					if(this.Player1.type == 1)
+						m+= "C";
+					if(this.Player1.type == 2)
+						m+= "P";
+					m+= "1";
+				}if((i == this.Piece2a.Location.y)&(j == this.Piece2a.Location.x)){
+					if(this.Player2.type == 1)
+						m+= "C";
+					if(this.Player2.type == 2)
+						m+= "P";
+					m+= "2";
+				}if((i == this.Piece2b.Location.y)&(j == this.Piece2b.Location.x)){
+					if(this.Player2.type == 1)
+						m+= "C";
+					if(this.Player2.type == 2)
+						m+= "P";
+					m+= "2";
+				}
+				display[i][j] = m;
+			}
+		}
+		return display;
+		
 	}
 }
