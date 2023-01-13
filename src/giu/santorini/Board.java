@@ -53,10 +53,14 @@ public class Board implements BoardInterface {
 		// didnt deal with the exception yet// check turn use canmove method
 	}
 	public void place(Piece Piece, Location newLocation) throws InvalidPlacementException{
-		Level[newLocation.y][newLocation.x]++;
+		if((this.canMove(Piece, newLocation))&Piece.moved){
+			Level[newLocation.y][newLocation.x]++;
+		}
+		else{
+			throw new InvalidPlacementException();
+		}
 		turn++;
 		Piece.moved = false;
-		// didnt deal with the exception yet//
 	}
 	public boolean isGameOver(){
 		return	hasNoMoves(this.Player1) |
