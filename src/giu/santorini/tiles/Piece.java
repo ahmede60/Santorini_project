@@ -16,6 +16,23 @@ public Piece(){
 		return null;
 	}
 	public ArrayList<Location> possiblePlacements(){
-		return null;
+		ArrayList<Location>m=new ArrayList<Location>();
+		if((this.Location.y+1<6)&(this.Location.x+1<6))
+			m.add(new Location(this.Location.y+1,this.Location.x+1));
+		if((this.Location.y-1>0)&(this.Location.x-1>0))
+			m.add(new Location(this.Location.y-1,this.Location.x-1));
+		if(this.Location.y+1<6)
+			m.add(new Location(this.Location.y+1,this.Location.x));
+		if(this.Location.x+1<6)
+			m.add(new Location(this.Location.y,this.Location.x+1));
+		if(this.Location.y-1>0)
+			m.add(new Location(this.Location.y-1,this.Location.x));
+		if(this.Location.x-1>0)
+			m.add(new Location(this.Location.y,this.Location.x-1));
+		if((this.Location.y-1>0)&(this.Location.x+1<6))
+			m.add(new Location(this.Location.y-1,this.Location.x+1));
+		if((this.Location.y+1<6)&(this.Location.x-1>0))
+			m.add(new Location(this.Location.y+1,this.Location.x-1));
+		return m;
 	}
 }
