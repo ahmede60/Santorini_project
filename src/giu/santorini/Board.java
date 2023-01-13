@@ -46,7 +46,7 @@ public class Board implements BoardInterface {
 	}
 	public Board(){
 	}
-	int SIDE = 5;
+	public int SIDE = 5;
 	public void move(Piece Piece, Location newLocation) throws InvalidMoveException{
 		if((Piece.equals(this.Piece1a))&(!this.Piece1a.moved)&(!this.Piece1b.moved)){
 			this.Piece1a.Location = newLocation;

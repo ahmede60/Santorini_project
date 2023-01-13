@@ -3,9 +3,12 @@ package giu.santorini.view;
 import giu.santorini.Board;
 import giu.santorini.players.Player;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 public class View extends JFrame{
 	public View(){
 		Scanner sc = new Scanner(System.in);
@@ -45,7 +48,13 @@ public class View extends JFrame{
         	Player2 = new Player(name2,2);
         }
         Board game = new Board(Player1,Player2);
-        System.out.print(game.Player1.name);
+        JFrame window = new JFrame();
+        window.setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        JPanel main = new JPanel(new BorderLayout());
+        JPanel board = new JPanel(new GridLayout(game.SIDE,game.SIDE));
+        main.add(board, BorderLayout.CENTER);
+        
 	}
 	public static void main(String[] args){
 		new View();
