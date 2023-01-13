@@ -9,7 +9,7 @@ import giu.santorini.tiles.Pyramid;
 import giu.santorini.utilities.Location;
 
 public class Board implements BoardInterface {
-	Player Player1;
+	public Player Player1;
 	Player Player2;
 	int[][] Level;
 	Piece Piece1a;
