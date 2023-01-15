@@ -2,11 +2,15 @@ package giu.santorini.view;
 
 import giu.santorini.Board;
 import giu.santorini.players.Player;
+import giu.santorini.tiles.Cube;
+import giu.santorini.tiles.Piece;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,10 +19,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 @SuppressWarnings("serial")
-public class View extends JFrame{
+public class View extends JFrame implements ActionListener{
 	Board game;
 	JPanel board;
 	JPanel text;
+	JFrame window;
 	public View(){
 		JFrame inputwindow = new JFrame();
         inputwindow.setVisible(true);
@@ -31,8 +36,8 @@ public class View extends JFrame{
         JPanel inputpanel = new JPanel(new GridLayout(2,2));
         inputpanel.setSize(500,200);
         inputpanel.setVisible(true);
-        JLabel instruction = new JLabel("<html>Cube can only move vertically and horizontally<br/>"
-        		+ "Pyramid can only move diagonally<br/>"
+        JLabel instruction = new JLabel("<html>Cubes can move vertically and horizontally<br/>"
+        		+ "Pyramids can only move diagonally<br/>"
         		+ "Colors will represent the tile's level<br/>"
         		+ "Light Gray: Level 0<br/>"
         		+ "Gray: Level 1<br/>"
@@ -61,16 +66,13 @@ public class View extends JFrame{
         while(correct){
         	type1 = type1field.getText();
         	name1 = name1field.getText();
-        	if ((type1.equals("1"))|(type1.equals("2")))
-        		correct = false;
-        }
-        correct = true;
-        while(correct){
         	type2 = type2field.getText();
         	name2 = name2field.getText();
-        	if ((type2.equals("1"))|(type2.equals("2")))
+        	if (((type1.equals("1"))|(type1.equals("2")))&
+        	((type2.equals("1"))|(type2.equals("2"))))
         		correct = false;
         }
+
         if (type1.equals("1")){
         	Player1 = new Player(name1,1);
         }
@@ -85,7 +87,7 @@ public class View extends JFrame{
         }
         this.game = new Board(Player1,Player2);
         inputwindow.dispose();
-        JFrame window = new JFrame();
+        window = new JFrame();
         window.setVisible(true);
         window.setDefaultCloseOperation(EXIT_ON_CLOSE);
         window.setSize(1500,1000);
@@ -107,6 +109,7 @@ public class View extends JFrame{
         window.repaint();
 	}
 	public void updatedisplay(){
+		this.board.removeAll();
 		for(int i = 0; i<this.game.SIDE; i++){
 			for(int j = 0; j<this.game.SIDE; j++){
 				JPanel m = new JPanel();
@@ -127,42 +130,167 @@ public class View extends JFrame{
 				if(this.game.display()[i][j].charAt(0)=='4'){
 					m.setBackground(Color.RED);
 				}
-				if(!(this.game.display()[i][j].length()==1)){
-					if(this.game.display()[i][j].charAt(2)=='1'){
-						if(this.game.display()[i][j].charAt(1)=='C'){
-							JButton b = new JButton("CUBE");
-							b.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-							m.add(b);
+				if((this.game.Piece1a.Location.y==i)&(this.game.Piece1a.Location.x==j)){
+					JButton p1a;
+					if(this.game.Piece1a instanceof Cube)
+						p1a = new CubeButton();
+					else
+						p1a = new PyramidButton();
+					p1a.setForeground(Color.BLUE);
+					p1a.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e){
+							move(game.Piece1a);
 						}
-						else{
-							JButton b = new JButton("PYRAMID");
-							b.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-							m.add(b);
+					});
+					m.add(p1a);
+				}
+				if((this.game.Piece1b.Location.y==i)&(this.game.Piece1b.Location.x==j)){
+					JButton p1b;
+					if(this.game.Piece1b instanceof Cube)
+						p1b = new CubeButton();
+					else
+						p1b = new PyramidButton();
+					p1b.setForeground(Color.BLUE);
+					p1b.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e){
+							move(game.Piece1b);
 						}
-					}
-					else{
-						if(this.game.display()[i][j].charAt(1)=='C'){
-							JButton b = new JButton("CUBE");
-							b.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-							m.add(b);
+					});
+					m.add(p1b);
+				}
+				if((this.game.Piece2a.Location.y==i)&(this.game.Piece2a.Location.x==j)){
+					JButton p2a;
+					if(this.game.Piece2a instanceof Cube)
+						p2a = new CubeButton();
+					else
+						p2a = new PyramidButton();
+					p2a.setForeground(Color.GREEN);
+					p2a.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e){
+							move(game.Piece2a);
 						}
-						else{
-							JButton b = new JButton("PYRAMID");
-							b.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-							m.add(b);
+					});
+					m.add(p2a);
+				}
+				if((this.game.Piece2b.Location.y==i)&(this.game.Piece2b.Location.x==j)){
+					JButton p2b;
+					if(this.game.Piece2b instanceof Cube)
+						p2b = new CubeButton();
+					else
+						p2b = new PyramidButton();
+					p2b.setForeground(Color.GREEN);
+					p2b.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e){
+							move(game.Piece2b);
 						}
+					});
+					m.add(p2b);
+				}
+				this.board.add(m);
+			}
+		}
+		this.text.add(new JLabel("<html>Player 1 is blue<br/>"
+				+ "Player 2 is green<br/>"
+				+ "It is "+this.game.getTurn().name+"' turn to move.</html>"));
+		this.window.revalidate();
+		this.window.repaint();
+	}
+	
+	
+	
+	
+	
+	
+	public void move(Piece Piece){
+		board.removeAll();
+		for(int i = 0; i<game.SIDE; i++){
+			for(int j = 0; j<game.SIDE; j++){
+				JPanel m = new JPanel();
+				m.setVisible(true);
+				m.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				if(game.display()[i][j].charAt(0)== '0'){
+					m.setBackground(Color.lightGray);
+				}
+				if(game.display()[i][j].charAt(0)=='1'){
+					m.setBackground(Color.GRAY);
+				}
+				if(game.display()[i][j].charAt(0)=='2'){
+					m.setBackground(Color.darkGray);
+				}
+				if(game.display()[i][j].charAt(0)=='3'){
+					m.setBackground(Color.BLACK);
+				}
+				if(game.display()[i][j].charAt(0)=='4'){
+					m.setBackground(Color.RED);
+				}
+				if((game.Piece1a.Location.y==i)&(game.Piece1a.Location.x==j)){
+					JButton p1a;
+					if(game.Piece1a instanceof Cube)
+						p1a = new CubeButton();
+					else
+						p1a = new PyramidButton();
+					p1a.setForeground(Color.BLUE);
+					m.add(p1a);
+				}
+				if((game.Piece1b.Location.y==i)&(game.Piece1b.Location.x==j)){
+					JButton p1b;
+					if(game.Piece1b instanceof Cube)
+						p1b = new CubeButton();
+					else
+						p1b = new PyramidButton();
+					p1b.setForeground(Color.BLUE);
+					m.add(p1b);
+				}
+				if((game.Piece2a.Location.y==i)&(game.Piece2a.Location.x==j)){
+					JButton p2a;
+					if(game.Piece2a instanceof Cube)
+						p2a = new CubeButton();
+					else
+						p2a = new PyramidButton();
+					p2a.setForeground(Color.GREEN);
+					m.add(p2a);
+				}
+				if((game.Piece2b.Location.y==i)&(game.Piece2b.Location.x==j)){
+					JButton p2b;
+					if(game.Piece2b instanceof Cube)
+						p2b = new CubeButton();
+					else
+						p2b = new PyramidButton();
+					p2b.setForeground(Color.GREEN);
+					m.add(p2b);
+				}
+				for(int k = 0; k < Piece.possibleMoves().size();k++){
+					if((Piece.possibleMoves().get(k).y==i)&(Piece.possibleMoves().get(k).x==j)){
+						HighlightButton highlight = new HighlightButton();
+						highlight.setForeground(Color.YELLOW);
+						m.add(highlight);
 					}
 				}
 				this.board.add(m);
 			}
 		}
-		this.text.add(new JLabel("It is "+this.game.getTurn().name+"' turn."));
-		revalidate();
-		repaint();
+		this.window.revalidate();
+		this.window.repaint();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	public static void main(String[] args){
 		View view =new View();
 		view.updatedisplay();
+		
+	}
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }

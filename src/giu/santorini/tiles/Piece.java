@@ -17,21 +17,21 @@ public Piece(){
 	}
 	public ArrayList<Location> possiblePlacements(){
 		ArrayList<Location>m=new ArrayList<Location>();
-		if((this.Location.y+1<6)&(this.Location.x+1<6))
+		if((this.Location.y+1<5)&(this.Location.x+1<5))
 			m.add(new Location(this.Location.y+1,this.Location.x+1));
-		if((this.Location.y-1>0)&(this.Location.x-1>0))
+		if((this.Location.y-1>-1)&(this.Location.x-1>-1))
 			m.add(new Location(this.Location.y-1,this.Location.x-1));
-		if(this.Location.y+1<6)
+		if(this.Location.y+1<5)
 			m.add(new Location(this.Location.y+1,this.Location.x));
-		if(this.Location.x+1<6)
+		if(this.Location.x+1<5)
 			m.add(new Location(this.Location.y,this.Location.x+1));
-		if(this.Location.y-1>0)
+		if(this.Location.y-1>-1)
 			m.add(new Location(this.Location.y-1,this.Location.x));
-		if(this.Location.x-1>0)
+		if(this.Location.x-1>-1)
 			m.add(new Location(this.Location.y,this.Location.x-1));
-		if((this.Location.y-1>0)&(this.Location.x+1<6))
+		if((this.Location.y-1>-1)&(this.Location.x+1<5))
 			m.add(new Location(this.Location.y-1,this.Location.x+1));
-		if((this.Location.y+1<6)&(this.Location.x-1>0))
+		if((this.Location.y+1<5)&(this.Location.x-1>-1))
 			m.add(new Location(this.Location.y+1,this.Location.x-1));
 		return m;
 	}
