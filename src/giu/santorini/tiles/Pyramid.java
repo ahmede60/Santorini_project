@@ -12,13 +12,13 @@ public class Pyramid extends Piece{
 		(this.Location.x-1>-1 & this.Location.x-1<5))
 			m.add(new Location(this.Location.y+1,this.Location.x-1));
 		if((this.Location.y-1>-1 & this.Location.y-1<5)&
-				(this.Location.x-1>-1 & this.Location.x-1<5))
-			m.add(new Location(this.Location.y-1,this.Location.x+1));
-		if((this.Location.y-1>-1 & this.Location.y-1<5)&
-				(this.Location.x-1>-1 & this.Location.x-1<5))
+		(this.Location.x-1>-1 & this.Location.x-1<5))
 			m.add(new Location(this.Location.y-1,this.Location.x-1));
+		if((this.Location.y-1>-1 & this.Location.y-1<5)&
+		(this.Location.x+1>-1 & this.Location.x+1<5))
+			m.add(new Location(this.Location.y-1,this.Location.x+1));
 		if((this.Location.y+1>-1 & this.Location.y+1<5)&
-				(this.Location.x-1>-1 & this.Location.x-1<5))
+		(this.Location.x+1>-1 & this.Location.x+1<5))
 			m.add(new Location(this.Location.y+1,this.Location.x+1));
 return m;	
 	}
