@@ -28,11 +28,12 @@ public class View extends JFrame{
 	JPanel text;
 	JFrame window;
 	boolean correctinput = true;
+	static boolean newgame = true;
 	public View(){
 		JFrame inputwindow = new JFrame();
         inputwindow.setVisible(true);
         inputwindow.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        inputwindow.setSize(500,500);
+        inputwindow.setSize(700,500);
 		JPanel input = new JPanel(new GridLayout(3,1));
 		input.setVisible(true);
 		input.setPreferredSize(new Dimension(700,500));
@@ -213,6 +214,8 @@ public class View extends JFrame{
 		this.text.add(new JLabel("<html>Player 1 is blue<br/>"
 				+ "Player 2 is green<br/>"
 				+ "It is "+this.game.getTurn().name+"' turn to move.</html>"));
+		if (game.isGameOver())
+			end();
 		this.window.revalidate();
 		this.window.repaint();
 	}
@@ -316,9 +319,9 @@ public class View extends JFrame{
 									}
 									catch(InvalidMoveException ee){
 										text.add(new JLabel("Invalid Move"));
+										window.revalidate();
+										window.repaint();
 									}
-									board.revalidate();
-									board.repaint();
 								}
 							});
 							m.add(highlight0);
@@ -335,9 +338,9 @@ public class View extends JFrame{
 									}
 									catch(InvalidMoveException ee){
 										text.add(new JLabel("Invalid Move"));
+										window.revalidate();
+										window.repaint();
 									}
-									board.revalidate();
-									board.repaint();
 								}
 							});
 							m.add(highlight1);
@@ -354,9 +357,9 @@ public class View extends JFrame{
 									}
 									catch(InvalidMoveException ee){
 										text.add(new JLabel("Invalid Move"));
+										window.revalidate();
+										window.repaint();
 									}
-									board.revalidate();
-									board.repaint();
 								}
 							});
 							m.add(highlight2);
@@ -373,9 +376,9 @@ public class View extends JFrame{
 									}
 									catch(InvalidMoveException ee){
 										text.add(new JLabel("Invalid Move"));
+										window.revalidate();
+										window.repaint();
 									}
-									board.revalidate();
-									board.repaint();
 								}
 							});
 							m.add(highlight3);
@@ -460,6 +463,8 @@ public class View extends JFrame{
 									}
 									catch(InvalidPlacementException ee){
 										text.add(new JLabel("Invalid Placement"));
+										window.revalidate();
+										window.repaint();
 									}
 								}
 							});
@@ -477,6 +482,8 @@ public class View extends JFrame{
 									}
 									catch(InvalidPlacementException ee){
 										text.add(new JLabel("Invalid Placement"));
+										window.revalidate();
+										window.repaint();
 									}
 								}
 							});
@@ -494,6 +501,8 @@ public class View extends JFrame{
 									}
 									catch(InvalidPlacementException ee){
 										text.add(new JLabel("Invalid Placement"));
+										window.revalidate();
+										window.repaint();
 									}
 								}
 							});
@@ -511,6 +520,8 @@ public class View extends JFrame{
 									}
 									catch(InvalidPlacementException ee){
 										text.add(new JLabel("Invalid Placement"));
+										window.revalidate();
+										window.repaint();
 									}
 								}
 							});
@@ -528,6 +539,8 @@ public class View extends JFrame{
 									}
 									catch(InvalidPlacementException ee){
 										text.add(new JLabel("Invalid Placement"));
+										window.revalidate();
+										window.repaint();
 									}
 								}
 							});
@@ -545,6 +558,8 @@ public class View extends JFrame{
 									}
 									catch(InvalidPlacementException ee){
 										text.add(new JLabel("Invalid Placement"));
+										window.revalidate();
+										window.repaint();
 									}
 								}
 							});
@@ -562,6 +577,8 @@ public class View extends JFrame{
 									}
 									catch(InvalidPlacementException ee){
 										text.add(new JLabel("Invalid Placement"));
+										window.revalidate();
+										window.repaint();
 									}
 								}
 							});
@@ -579,6 +596,8 @@ public class View extends JFrame{
 									}
 									catch(InvalidPlacementException ee){
 										text.add(new JLabel("Invalid Placement"));
+										window.revalidate();
+										window.repaint();
 									}
 								}
 							});
@@ -592,8 +611,36 @@ public class View extends JFrame{
 		this.window.revalidate();
 		this.window.repaint();
 	}
+	public void end(){
+		window.dispose();
+		JFrame endwindow = new JFrame();
+        endwindow.setVisible(true);
+        endwindow.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        endwindow.setSize(500,500);
+        JPanel end = new JPanel(new GridLayout(2,1));
+		end.setVisible(true);
+		end.setPreferredSize(new Dimension(500,500));
+		endwindow.add(end);
+		end.add(new JLabel(game.getWinner().name +" IS THE WINNER"));
+		JButton restart = new JButton("Restart");
+		restart.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				endwindow.dispose();
+				newgame = true;
+			}
+		});
+		end.add(restart);
+	}
+	public static void start(){
+		
+	}
 	public static void main(String[] args){
-		View view =new View();
-		view.updatedisplay();
+		while (true){
+			if (newgame){
+				View view =new View();
+				view.updatedisplay();
+				newgame = false;
+			}
+		}
 	}
 }

@@ -75,12 +75,12 @@ public class Board implements BoardInterface {
 	public void place(Piece Piece, Location newLocation) throws InvalidPlacementException{
 		if((this.canPlace(Piece, newLocation))&Piece.moved){
 			Level[newLocation.y][newLocation.x]++;
+			turn++;
+			Piece.moved = false;
 		}
 		else{
 			throw new InvalidPlacementException();
 		}
-		turn++;
-		Piece.moved = false;
 	}
 	public boolean isGameOver(){
 		return	hasNoMoves(this.Player1) |
@@ -149,7 +149,7 @@ public class Board implements BoardInterface {
 			!((this.Piece1b.Location.y == location.y)&(this.Piece1b.Location.x == location.x))&
 			!((this.Piece2a.Location.y == location.y)&(this.Piece2a.Location.x == location.x))&
 			!((this.Piece2b.Location.y == location.y)&(this.Piece2b.Location.x == location.x))&
-			this.Level[Piece.Location.y][Piece.Location.x] <= (1+ this.Level[location.y][location.x]))
+			(this.Level[Piece.Location.y][Piece.Location.x]+1) >= this.Level[location.y][location.x])
 				return true;
 		}
 		return false;
@@ -162,7 +162,7 @@ public class Board implements BoardInterface {
 			!((this.Piece1b.Location.y == location.y)&(this.Piece1b.Location.x == location.x))&
 			!((this.Piece2a.Location.y == location.y)&(this.Piece2a.Location.x == location.x))&
 			!((this.Piece2b.Location.y == location.y)&(this.Piece2b.Location.x == location.x))&
-			this.Level[Piece.possibleMoves().get(i).y][Piece.possibleMoves().get(i).x] <= 3)
+			this.Level[Piece.possiblePlacements().get(i).y][Piece.possiblePlacements().get(i).x] <= 3)
 				return true;
 		}
 		return false;
